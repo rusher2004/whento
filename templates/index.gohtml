@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>whento</title>
+</head>
+
+<body>
+  <div class="container">
+    {{template "header"}}
+    <div class="chart">
+      <div class="month-row">
+        <div class="month-filler"></div>
+        {{range .Months}}
+        {{$url := print "/month_detail/" .Name}}
+        <div class="month-name"><a href={{$url}}>{{ft .Name}}</a></div>
+        {{end}}
+      </div>
+      <div class="chart-horizontal">
+        <div class="plant-column">
+          {{range .Plants}}
+          {{$url := print "/plant_detail/" .Name}}
+          <div class="plant-name"><a href={{$url}}>{{.Name}}</a></div>
+          {{end}}
+        </div>
+        <div class="chart-body">
+          {{$fullMonths := .Months}}
+          {{range .Plants}}
+          {{$plantMonths := .Months}}
+          <div class="plant-row">
+            {{range $index, $month := $fullMonths}}
+            <div class="chart-cell">
+              {{if cm $index $plantMonths}}
+                <svg class="leaf" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                  <path
+                    d="M546.2 9.7c-5.6-12.5-21.6-13-28.3-1.2C486.9 62.4 431.4 96 368 96h-80C182 96 96 182 96 288c0 7 .8 13.7 1.5 20.5C161.3 262.8 253.4 224 384 224c8.8 0 16 7.2 16 16s-7.2 16-16 16C132.6 256 26 410.1 2.4 468c-6.6 16.3 1.2 34.9 17.5 41.6 16.4 6.8 35-1.1 41.8-17.3 1.5-3.6 20.9-47.9 71.9-90.6 32.4 43.9 94 85.8 174.9 77.2C465.5 467.5 576 326.7 576 154.3c0-50.2-10.8-102.2-29.8-144.6z" />
+                </svg>
+              {{end}}
+            </div>
+            {{end}}
+          </div>
+          {{end}}
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<style>
+  body {
+    background-color: #B9D980;
+  }
+ .container {
+   height: 100vh;
+   width: 80%;
+   margin-left: auto;
+   margin-right: auto;
+   overflow: auto;
+ }
+ .header {
+   color: #423424;
+   display: flex;
+   align-items: flex-end;
+ }
+ .subtitle {
+   font-weight: 500;
+   font-size: .6em;
+   font-style: italic;
+ }
+ .chart {
+   display: flex;
+   flex-direction: column;
+   width: 75%;
+   height: 75%;
+   margin-left: auto;
+   margin-right: auto;
+ }
+ .month-row {
+   display: flex;
+ }
+ .month-filler {
+  width: 15%;
+ }
+ .month-name {
+   flex: 1 1 auto;
+   text-align: center;
+   font-size: 1.25em;
+   padding: 0px 10px;
+ }
+ .chart-horizontal {
+   display: flex;
+ }
+ .plant-column {
+   display: flex;
+   flex-direction: column;
+   width: 15%;
+   justify-content: space-around;
+ }
+ .chart-body {
+   display: flex;
+   flex-direction: column;
+   flex: 1 1 auto;
+   border: .5px solid black;
+ }
+ .plant-row {
+   display: flex;
+ }
+ .chart-cell {
+   flex: 1 1 0;
+   border: .5px solid black;
+   min-height: 30px;
+ }
+ .leaf {
+   max-height: 50%;
+   max-width: 50%;
+   margin-left: 20%;
+   margin-top: 20%;
+   fill: #423424;
+ }
+ a {
+   text-decoration: none;
+   color: black;
+ }
+ a:visited {
+   color: black;
+ }
+</style>
+
+</html>
